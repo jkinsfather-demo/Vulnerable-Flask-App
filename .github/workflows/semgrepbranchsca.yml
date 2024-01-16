@@ -14,9 +14,18 @@ jobs:
     if: (github.actor != 'dependabot[bot]')
 
     steps:
+      - name: Checkout Code
       - uses: actions/checkout@v3
+
+      - name: Generate Project Name
+        id: project_name
+        run: |
+          PROJECT_NAME="${GITHUB_REPOSITORY}/${GITHUB_REF#refs/heads/}"
+          echo "Project Name: $PROJECT_NAME"
+        
       - run: |
-          semgrep ci --supply-chain
+          echo $SEMGREP_REPO_NAME
+          # semgrep ci --supply-chain
         env:
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
-          SEMGREP_REPO_NAME: "${GITHUB_REPOSITORY}/${GITHUB_REF#refs/heads/}"
+          SEMGREP_REPO_NAME: ${{ steps.project_name.outputs.PROJECT_NAME }}
