@@ -1,0 +1,32 @@
+# Name of this GitHub Actions workflow.
+name: Semgrep SCA Scan and SBOM creation in CI
+
+on:
+  # Scan on-demand through GitHub Actions interface:
+  workflow_dispatch: {}
+jobs:
+  semgrep:
+    name: semgrep/ci 
+    runs-on: ubuntu-latest
+    container:
+      image: returntocorp/semgrep
+
+    if: (github.actor != 'dependabot[bot]')
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Generate Project Name
+        id: project_name
+        run: |
+          echo "::set-output name=PROJECT_NAME::${GITHUB_REPOSITORY}/${GITHUB_REF#refs/heads/}"
+          
+      - name: Run Semgrep Supply Chain Scan on Branch
+        run: |
+          echo "Project Name: $SEMGREP_REPO_NAME"
+          semgrep ci --supply-chain --dry-run --json
+          # DO SBOM STUFF HERE!
+        env:
+          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+          SEMGREP_REPO_NAME: ${{ steps.project_name.outputs.PROJECT_NAME }}
