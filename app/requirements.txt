@@ -26,3 +26,10 @@ SQLAlchemy==1.1.11
 tornado==4.5.1
 urllib3==1.21.1
 Werkzeug==0.14.1
+ceODBC==2.0.1
+pdfrw==0.4
+python-ntlm
+xmltodict==0.10.2
+jwcrypto==0.6.0
+flask==0.10.1
+pandas==0.16.2
