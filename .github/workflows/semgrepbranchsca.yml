@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: |
-          SEMGREP_REPO_NAME="${GITHUB_REPOSITORY}/${GITHUB_REF#refs/heads/}"
           semgrep ci --supply-chain
         env:
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+          SEMGREP_REPO_NAME: "${GITHUB_REPOSITORY}/${GITHUB_REF#refs/heads/}"
