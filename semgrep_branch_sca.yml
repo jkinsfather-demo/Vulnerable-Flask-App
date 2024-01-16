@@ -1,1 +1,35 @@
+# Name of this GitHub Actions workflow.
+name: Semgrep
 
+on:
+  # Scan on-demand through GitHub Actions interface:
+  workflow_dispatch: {}
+jobs:
+  get_workflow_branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Get branch name
+        id: branch name
+        run: | 
+          # Extract the branch name from GITHUB_REF
+          BRANCH_NAME="${GITHUB_REF#refs/heads/}"
+          echo "Branch Name: $BRANCH_NAME"
+  # semgrep:
+  #   name: semgrep/ci 
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: returntocorp/semgrep
+
+  #   if: (github.actor != 'dependabot[bot]')
+
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - run: semgrep ci
+  #       env:
+  #         # Connect to Semgrep Cloud Platform through your SEMGREP_APP_TOKEN.
+  #         # Generate a token from Semgrep Cloud Platform > Settings
+  #         # and add it to your GitHub secrets.
+  #         SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+  #         SEMGREP_REPO_NAME: $GITHUB_REPOSITORY + 
