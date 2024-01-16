@@ -24,8 +24,8 @@ jobs:
           echo "Project Name: $PROJECT_NAME"
 
       - name: Run Semgrep Supply Chain Scan on Branch
-      - run: |
-          echo $SEMGREP_REPO_NAME
+        run: |
+          echo "Project Name: $SEMGREP_REPO_NAME"
           # semgrep ci --supply-chain
         env:
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
