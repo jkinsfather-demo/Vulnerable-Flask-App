@@ -1,0 +1,28 @@
+# Name of this GitHub Actions workflow.
+name: Normal Semgrep Scan
+
+on:
+  workflow_dispatch: {}
+  # Scan mainline branches and report all findings:
+  # push:
+  #   branches: ["master", "main"]
+  # Schedule the CI job (this method uses cron syntax):
+  # schedule:
+  #   - cron: '20 17 * * *' # Sets Semgrep to scan every day at 17:20 UTC.
+  #   # It is recommended to change the schedule to a random time.
+
+jobs:
+  semgrep:
+    name: semgrep/ci 
+    # If you are self-hosting, change the following `runs-on` value: 
+    runs-on: ubuntu-latest
+    container:
+      image: returntocorp/semgrep
+
+    if: (github.actor != 'dependabot[bot]')
+
+    steps:
+      - uses: actions/checkout@v3
+      - run: semgrep ci
+        env:
+          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
