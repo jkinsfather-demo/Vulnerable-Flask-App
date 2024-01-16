@@ -22,7 +22,8 @@ jobs:
         run: |
           PROJECT_NAME="${GITHUB_REPOSITORY}/${GITHUB_REF#refs/heads/}"
           echo "Project Name: $PROJECT_NAME"
-        
+
+      - name: Run Semgrep Supply Chain Scan on Branch
       - run: |
           echo $SEMGREP_REPO_NAME
           # semgrep ci --supply-chain
