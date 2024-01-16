@@ -15,18 +15,17 @@ jobs:
 
     steps:
       - name: Checkout Code
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
 
       - name: Generate Project Name
         id: project_name
         run: |
-          PROJECT_NAME="${GITHUB_REPOSITORY}/${GITHUB_REF#refs/heads/}"
-          echo "Project Name: $PROJECT_NAME"
-
+          echo "::set-output name=PROJECT_NAME::${GITHUB_REPOSITORY}/${GITHUB_REF#refs/heads/}"
+          
       - name: Run Semgrep Supply Chain Scan on Branch
         run: |
           echo "Project Name: $SEMGREP_REPO_NAME"
-          # semgrep ci --supply-chain
+          semgrep ci --supply-chain
         env:
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
           SEMGREP_REPO_NAME: ${{ steps.project_name.outputs.PROJECT_NAME }}
