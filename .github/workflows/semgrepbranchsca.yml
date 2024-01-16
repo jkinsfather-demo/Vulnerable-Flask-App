@@ -20,8 +20,8 @@ jobs:
       - name: Generate Project Name
         id: project_name
         run: |
-          PROJECT_NAME="${GITHUB_REPOSITORY}/${GITHUB_REF#refs/heads/}"
-          echo "Project Name: $PROJECT_NAME"
+          echo "::set-output name=PROJECT_NAME::${GITHUB_REPOSITORY}/${GITHUB_REF#refs/heads/}"
+          echo "PROJECT_NAME"
 
       - name: Run Semgrep Supply Chain Scan on Branch
         run: |
